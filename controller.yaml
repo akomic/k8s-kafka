@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: kafka
+  name: kafka
+spec:
+  replicas: 1
+  selector:
+    name: kafka
+  template:
+    metadata:
+      labels:
+        name: kafka
+    spec:
+      containers:
+        - command:
+            - /kafka/config-and-run.sh
+          resources:
+            limits:
+              cpu: 0.5
+          env:
+            - name: ZOOKEEPER_CONNECT
+              value: cassandra-1:2182,cassandra-2:2182,cassandra-3:2182
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          image: akomic/k8s-kafka
+          name: kafka
+          ports:
+            - containerPort: 9092
+              name: primary
+            - containerPort: 7203
+              name: jmx
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+        - name: data
+          emptyDir: {}
+          

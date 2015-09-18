@@ -3,7 +3,7 @@
 Kafka container on Kubernetes
 
 Edit controller.yaml and change ZOOKEEPER_CONNECT environment to point to
-Zookeeper instances configuration of which is not the scope of this
+Zookeeper instances you already have. Configuration of Zookeeper is not in the scope of this
 document. List of Zookeepers is comma-separated list e.g. host:port, host:port ...
 
 Unique machine id required by Kafka configuration is generated from the ip

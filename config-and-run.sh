@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVER_ID=`ip addr | awk '/inet/ && /eth0/{sub(/\/.*$/,"",$2); print $2}' | sed -r 's/\.//g'`
+SERVER_ID=$(hostname -I | sed -r 's/(.[^ ]+).*/\1/g;s/\.//g')
 
 if [ -z "${ZOOKEEPER_CONNECT}" ];then
 	echo "ZOOKEEPER_CONNECT environment variable missing"
